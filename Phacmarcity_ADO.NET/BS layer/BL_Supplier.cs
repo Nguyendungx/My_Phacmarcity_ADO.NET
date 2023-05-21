@@ -19,34 +19,28 @@ namespace Phacmarcity_ADO.NET.BS_layer
         {
             return db.ExecuteQueryDataSet("SELECT * FROM NhaCungCap", CommandType.Text);
         }
-        public bool ThemNCC(string MaNhaCungCap,
-            string TenNhaCungCap,
-            string DiaChi,
-            string ThongTinDaiDien,
-            ref string err)
+        public bool ThemNCC(string MaNhaCungCap, string TenNhaCungCap, string DiaChi, string ThongTinDaiDien, ref string err)
         {
-            string sqlString = "INSERT INTO NhaCungCap (MaNhaCungCap, TenNhaCungCap,DiaChi,ThongTinDaiDien) VALUES ('" + MaNhaCungCap + "', '" + TenNhaCungCap + "', '" + DiaChi + "', '" + ThongTinDaiDien + "');";
-       
+            string sqlString = "INSERT INTO NhaCungCap (MaNhaCungCap, TenNhaCungCap, DiaChi, ThongTinDaiDien) VALUES ('" + MaNhaCungCap + "', N'" + TenNhaCungCap + "', N'" + DiaChi + "', N'" + ThongTinDaiDien + "');";
             return db.MyExecuteNonQuery(sqlString, CommandType.Text, ref err);
         }
+
         public bool XoaNCC(ref string err, string MaNhaCungCap)
         {
             string sqlString = "DELETE FROM NhaCungCap WHERE MaNhaCungCap = '" + MaNhaCungCap + "';";
             return db.MyExecuteNonQuery(sqlString, CommandType.Text, ref err);
         }
 
-        public bool CapNhatNCC(string MaNhaCungCap,
-            string TenNhaCungCap,
-            string DiaChi,
-            string ThongTinDaiDien, ref string err)
+        public bool CapNhatNCC(string MaNhaCungCap, string TenNhaCungCap, string DiaChi, string ThongTinDaiDien, ref string err)
         {
             string sqlString = "UPDATE NhaCungCap SET MaNhaCungCap = N'" + MaNhaCungCap +
                 "', TenNhaCungCap = N'" + TenNhaCungCap +
-                "', DiaChi = N'" +DiaChi +
-                "', ThongTinDaiDien = N'" +ThongTinDaiDien+
-                "' WHERE MaPX = '" + MaNhaCungCap + "';";
-                               
+                "', DiaChi = N'" + DiaChi +
+                "', ThongTinDaiDien = N'" + ThongTinDaiDien +
+                "' WHERE MaNhaCungCap = '" + MaNhaCungCap + "';";
+
             return db.MyExecuteNonQuery(sqlString, CommandType.Text, ref err);
         }
+
     }
 }
