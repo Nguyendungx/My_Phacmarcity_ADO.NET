@@ -407,6 +407,7 @@
             txtTimKiem.Name = "txtTimKiem";
             txtTimKiem.Size = new Size(169, 27);
             txtTimKiem.TabIndex = 163;
+            txtTimKiem.TextChanged += txtTimKiem_TextChanged;
             // 
             // label19
             // 

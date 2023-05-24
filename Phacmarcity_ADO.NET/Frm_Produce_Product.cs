@@ -25,10 +25,22 @@ namespace Phacmarcity_ADO.NET
         {
             InitializeComponent();
         }
-        void LoadData()
+        void reset()
+        {
+            foreach (Control control in pnlMain.Controls)
+            {
+                if (control is TextBox txt)
+                {
+                    txt.Clear();
+                }
+            }
+            pnlSearch.Enabled = false;
+        }
+            void LoadData()
         {
             try
             {
+                reset();
                 dtPhieuXuat = new DataTable();
                 dtPhieuXuat.Clear();
                 DataSet ds = dbTP.LayPhieuXuat();
@@ -62,6 +74,36 @@ namespace Phacmarcity_ADO.NET
                 MessageBox.Show("Không lấy được nội dung trong table PhieuXuat. Lỗi rồi!!!");
             }
         }
+        void LoadDataSearch(string input, string tukhoa)
+        {
+            try
+            {
+                /*dgvPhieuXuat.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;*/
+                dtPhieuXuat = new DataTable();
+                dtPhieuXuat.Clear();
+                DataSet ds = dbTP.TimKiemPhieuXuat(input, tukhoa);
+                dtPhieuXuat = ds.Tables[0];
+                // Đưa dữ liệu lên DataGridView 
+                dgvPhieuXuat.DataSource = dtPhieuXuat;
+                // Thay đổi độ rộng cột 
+                dgvPhieuXuat.AutoResizeColumns();
+                // Xóa trống các đối tượng trong Panel 
+/*                this.txtMaPX.ResetText();
+                this.txtMaNhanVien.ResetText();*/
+                // Không cho thao tác trên các nút Lưu / Hủy 
+                this.btnSave.Enabled = false;
+                // Cho thao tác trên các nút Thêm / Sửa / Xóa /Thoát 
+                this.btnAdd.Enabled = true;
+                this.btnEdit.Enabled = true;
+                this.btnDelete.Enabled = true;
+            }
+            catch
+            {
+                MessageBox.Show("Không lấy được nội dung trong table PhieuXuat. Lỗi rồi!!!");
+
+            }
+        }
+
 
         private void Frm_Produce_Product_Load(object sender, EventArgs e)
         {
@@ -243,6 +285,32 @@ namespace Phacmarcity_ADO.NET
                 MessageBox.Show("Không xóa được. Lỗi rồi!");
             }
         }
+
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            if (txtTimKiem.Text != null && cbxTimKiem.SelectedIndex != -1)
+            {
+
+                string typeSearch = StringConvert.ConvertToEnumPhieuXuat(cbxTimKiem.SelectedItem.ToString());
+                switch (typeSearch)
+                {
+                    case nameof(Cls_Enum.OptionPhieuXuat.MaPX):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    case nameof(Cls_Enum.OptionPhieuXuat.MaNhanVien):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    case nameof(Cls_Enum.OptionPhieuXuat.MaKhachHang):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    case nameof(Cls_Enum.OptionPhieuXuat.MaThuoc):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
-    
+
 }

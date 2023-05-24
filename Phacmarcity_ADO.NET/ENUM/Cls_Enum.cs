@@ -16,6 +16,12 @@ namespace Phacmarcity_ADO.NET.ENUM
         }
         public enum OptionPhieuXuat
         {
+            MaPX,
+            MaNhanVien,
+            MaKhachHang,
+            MaThuoc,
+            SoLuong,
+            DonGia,
             NgayXuat
         }
         public enum OptionEmployee
