@@ -60,6 +60,35 @@ namespace Phacmarcity_ADO.NET
                 MessageBox.Show("Không lấy được nội dung trong table PhieuXuat. Lỗi rồi!!!");
             }
         }
+        void LoadDataSearch(string input, string key)
+        {
+            try
+            {
+                dgvNhaCungCap.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dtNCC = new DataTable();
+                dtNCC.Clear();
+                DataSet ds = dbTP.TimKiemNCC(input, key);
+                dtNCC = ds.Tables[0];
+                // Đưa dữ liệu lên DataGridView 
+                dgvNhaCungCap.DataSource = dtNCC;
+                // Thay đổi độ rộng cột 
+                dgvNhaCungCap.AutoResizeColumns();
+                // Xóa trống các đối tượng trong Panel 
+                //this.txtKhachHang.ResetText();
+                this.txtTenNCC.ResetText();
+                // Không cho thao tác trên các nút Lưu / Hủy 
+                this.btnSave.Enabled = false;
+                // Cho thao tác trên các nút Thêm / Sửa / Xóa /Thoát 
+                this.btnAdd.Enabled = true;
+                this.btnEdit.Enabled = true;
+                this.btnDelete.Enabled = true;
+            }
+            catch
+            {
+                MessageBox.Show("Không lấy được nội dung trong table KhachHang. Lỗi rồi!!!");
+
+            }
+        }
         private void Frm_Supplier_Load(object sender, EventArgs e)
         {
             pnlMain.Enabled = false;
@@ -213,6 +242,32 @@ namespace Phacmarcity_ADO.NET
             catch (SqlException)
             {
                 MessageBox.Show("Không xóa được. Lỗi rồi!");
+            }
+        }
+
+        private void txtTimKiem_TextChanged(object sender, EventArgs e)
+        {
+            if (txtTimKiem.Text != null && cbxTimKiem.SelectedIndex != -1)
+            {
+
+                string typeSearch = StringConvert.ConvertToEnumSupplier(cbxTimKiem.SelectedItem.ToString());
+                switch (typeSearch)
+                {
+                    case nameof(Cls_Enum.OptionSupplier.MaNhaCungCap):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    case nameof(Cls_Enum.OptionSupplier.TenNhaCungCap):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    case nameof(Cls_Enum.OptionSupplier.DiaChi):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    case nameof(Cls_Enum.OptionSupplier.ThongTinDaiDien):
+                        LoadDataSearch(typeSearch, txtTimKiem.Text);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

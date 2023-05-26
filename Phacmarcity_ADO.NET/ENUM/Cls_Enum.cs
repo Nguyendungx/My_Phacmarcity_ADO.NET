@@ -29,5 +29,12 @@ namespace Phacmarcity_ADO.NET.ENUM
             NgaySinh,
             NgayVaoLam
         }
+        public enum OptionSupplier
+        {
+            MaNhaCungCap,
+            TenNhaCungCap,
+            DiaChi,
+            ThongTinDaiDien
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Phacmarcity_ADO.NET.DB_layer;
+using Phacmarcity_ADO.NET.ENUM;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +24,10 @@ namespace Phacmarcity_ADO.NET.BS_layer
         {
             string sqlString = "INSERT INTO NhaCungCap (MaNhaCungCap, TenNhaCungCap, DiaChi, ThongTinDaiDien) VALUES ('" + MaNhaCungCap + "', N'" + TenNhaCungCap + "', N'" + DiaChi + "', N'" + ThongTinDaiDien + "');";
             return db.MyExecuteNonQuery(sqlString, CommandType.Text, ref err);
+        }
+        public DataSet TimKiemNCC(string input, string key)
+        {
+            return db.ExecuteQueryDataSet("select * from NhaCungCap Where " + input + " like '%" + key + "%'", CommandType.Text);
         }
 
         public bool XoaNCC(ref string err, string MaNhaCungCap)

@@ -64,6 +64,25 @@ namespace Phacmarcity_ADO.NET.Class
                     return "";
             }
         }
-
+        public static string ConvertToEnumSupplier(string input)
+        {
+/*            Mã nhà cung cấp
+        Tên nhà cung cấp
+        Địa chỉ
+            Thông tin địa diện*/
+            switch (input)
+            {
+                case "Mã nhà cung cấp":
+                    return "MaNhaCungCap";
+                case "Tên nhà cung cấp":
+                    return "TenNhaCungCap";
+                case "Địa chỉ":
+                    return "DiaChi";
+                case "Thông tin địa diện":
+                    return "ThongTinDaiDien";
+                default:
+                    return "";
+            }
+        }
     }
 }
